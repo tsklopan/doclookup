@@ -22,6 +22,10 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .logo {
+            max-width: 300px;
+            margin-bottom: 2rem;
+        }
         .loader {
             width: 50px;
             height: 50px;
@@ -43,44 +47,34 @@
             color: #666;
             line-height: 1.6;
         }
+        .info {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
         #error {
             color: #dc3545;
             display: none;
             margin-top: 1rem;
         }
-        .manual-link {
-            display: none;
-            margin-top: 1.5rem;
-        }
-        .manual-link a {
-            color: #897a53;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid #897a53;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-        .manual-link a:hover {
-            background: #897a53;
-            color: white;
-        }
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="logo.png" alt="CENTURY 21 Accent Homes, Inc." class="logo">
         <div class="loader"></div>
         <h1>Preparing Your Document</h1>
         <p>Please wait while we prepare your document for signing...</p>
+        <p class="info">A copy of the contract to sign will be emailed directly to you.</p>
         <p id="error">
-            If you're not redirected automatically, please use the link below.
+            If you're not redirected within 30 seconds, please refresh the page or contact your agent.
         </p>
-        <div class="manual-link" id="manualLink">
-            <a href="#" id="documentLink">Open Document</a>
-        </div>
     </div>
 
     <script>
-        const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQJ2quEeuQcv7H2dcPqTYdfmTisyrXQZFe6NO4ekYU5lSa03l8Kx9PAlv1Hm44IpS9/exec';
+        const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzQiwP3URx8wacU84nmBX41ExgEjO5jV7NX55rrRofBIJhnO6E7N_yn5QFcVN23zqyw/exec';
         const MAX_ATTEMPTS = 6;
         let attempts = 0;
 
@@ -93,7 +87,6 @@
             const submissionId = getSubmissionId();
             if (!submissionId) {
                 document.getElementById('error').style.display = 'block';
-                document.getElementById('manualLink').style.display = 'block';
                 return;
             }
 
@@ -108,18 +101,12 @@
                     setTimeout(checkForDocument, 5000);
                 } else {
                     document.getElementById('error').style.display = 'block';
-                    document.getElementById('manualLink').style.display = 'block';
                 }
             } catch (error) {
                 console.error('Error:', error);
                 document.getElementById('error').style.display = 'block';
-                document.getElementById('manualLink').style.display = 'block';
             }
         }
-
-        setTimeout(() => {
-            document.getElementById('manualLink').style.display = 'block';
-        }, 10000);
 
         document.addEventListener('DOMContentLoaded', checkForDocument);
     </script>
